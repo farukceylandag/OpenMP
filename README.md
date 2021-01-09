@@ -8,7 +8,7 @@
 
 ![](https://i.hizliresim.com/x6rvkR.png)
 
-**3)** Finally set OpenMP Support to Yes. Apply and OK.
+**3)** Finally set OpenMP Support to Yes(/openmp). Apply and OK.
 
 ![](https://i.hizliresim.com/O9E1Db.png)
 
