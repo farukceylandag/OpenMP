@@ -5,14 +5,14 @@
 using namespace std;
 
 #define N 1000
-#define thread_num omp_get_max_threads() //Thread Sayısı
+#define thread_num omp_get_max_threads() //Thread Num
 
 template <class M>
 class Matrix {
-	
+
 public:
 
-	 Matrix();
+    Matrix();
     void Matmul();
     void Parallel_Matmul();
 
@@ -61,42 +61,42 @@ void Matrix<M>::Matmul() {
     end = clock();
 
     if (sizeof(M) == sizeof(float))
-    	cout << "Float Seri Kosma Suresi = " << float(end - start) / CLOCKS_PER_SEC << " sn" << endl;
+        cout << "Float Serial Runnig Time = " << float(end - start) / CLOCKS_PER_SEC << " sec" << endl;
     else if (sizeof(M) == sizeof(double))
-    	cout << "Double Seri Kosma Suresi = " << float(end - start) / CLOCKS_PER_SEC << " sn" << endl;
+        cout << "Double Serial Running Time = " << float(end - start) / CLOCKS_PER_SEC << " sec" << endl;
 }
 
 template <class M>
 void Matrix<M>::Parallel_Matmul() {
 
     clock_t start = clock(), end;
-    #pragma omp parallel for private(i,j,k) shared(A,B,C)
-        for (i = 0 ; i < N ; i++) {
-            for (j =  0 ; j < N ; j++) {
-                for (k = 0 ; k < N ; k++) {
-                    C[i][j] += A[i][k] * B[k][j];
-                }
+#pragma omp parallel for private(i,j,k) shared(A,B,C)
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < N; j++) {
+            for (k = 0; k < N; k++) {
+                C[i][j] += A[i][k] * B[k][j];
             }
         }
- 
+    }
+
     end = clock();
 
     if (sizeof(M) == sizeof(float))
-        cout << "Float Paralel Kosma Suresi(Tek Thread) = " << float(end - start) / (CLOCKS_PER_SEC*thread_num) << " sn" << endl;
+        cout << "Float Parallel Running Time = " << float(end - start) / (CLOCKS_PER_SEC) << " sec" << endl;
     else if (sizeof(M) == sizeof(double))
-        cout << "Double Paralel Kosma Suresi(Tek Thread) = " << float(end - start) / (CLOCKS_PER_SEC*thread_num) << " sn" << endl;
+        cout << "Double Parallel Runnig Time = " << float(end - start) / (CLOCKS_PER_SEC) << " sec" << endl;
 }
 
-int main(){
-    
+int main() {
+
     omp_set_num_threads(thread_num);
-    cout << "\nThread Sayisi = " << omp_get_max_threads()<< "\n" << endl;
-    cout << N << "x" << N << " icin;\n----------------" << endl;
+    cout << "\nThread Num = " << omp_get_max_threads() << "\n" << endl;
+    cout << "For " << N << "x" << N << " Matrix;\n---------------------" << endl;
 
     Matrix<float>* fm = new Matrix<float>(); //Float Matrix
     fm->Matmul();
     fm->Parallel_Matmul();
-   
+
     cout << endl;
 
     Matrix<double>* dm = new Matrix<double>(); //Double Matrix
