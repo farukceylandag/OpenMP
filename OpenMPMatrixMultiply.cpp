@@ -22,7 +22,7 @@ private:
     static M A[N][N];
     static M B[N][N];
     static M C[N][N];
-    M deger = 1.0;
+    M value = 1.0;
 
 };
 
@@ -40,8 +40,8 @@ Matrix<M>::Matrix() {
     for (i = 0; i < N; i++) {
         for (j = 0; j < N; j++)
         {
-            A[i][j] = deger;
-            B[i][j] = deger;
+            A[i][j] = value;
+            B[i][j] = value;
             C[i][j] = 0;
         }
     }
